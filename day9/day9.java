@@ -18,23 +18,23 @@ public class day9 {
                 list.add(Long.parseLong(fileInput.nextLine()));
             }
 
-            Long value = Long.valueOf(findValue(list));
+            Long value = findValue(list);
             System.out.println(value);
 
-            for (int i = 0; i < list.size(); i++) {
-                for (int j = i; j < list.size(); j++) {
-                    List<Long> temp = list.subList(i, j);
-                    // how do longs work???????????? no one knows??????????????????????
-                    Long val = Long.valueOf(0);
-                    for (int k = 0; k < temp.size(); k++){
-                        val = val + temp.get(k);
-                    }
-                    if (val == value) {
+            //part 2
+            for (int i = 0; i < list.size(); i++) {           
+                long sum = list.get(i);
+                for (int j = i+1; j < list.size() && sum < value; j++) {
+                    sum += list.get(j);  
+                        
+                    if (sum == value) {
+                        System.out.println(sum);
+                        List<Long> temp = list.subList(i, j+1);
                         Long largest = Collections.max(temp);
                         Long smallest = Collections.min(temp);
-
                         System.out.println(largest+smallest);
-                    }
+                        System.exit(0);
+                    } 
                 }
             }
             
@@ -44,6 +44,7 @@ public class day9 {
         }
     }
 
+    // part 1
     public static Long findValue(LinkedList<Long> list) {
         for (int i = 25; i < list.size(); i++) {
             Long value = list.get(i);
@@ -59,9 +60,7 @@ public class day9 {
             if (valid == false) {
                 return value;
             }
-            else {
-                return 0;
-            }
         }
+        return 0L;
     }
 }
